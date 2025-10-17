@@ -10,6 +10,13 @@ const version = ref('0.1.0');
 const description = ref('');
 const changes = ref([]);
 const authorList = ref([]);
+const releaseDate = ref(new Date().toISOString().split('T')[0]); // Default to today
+const dateMenu = ref(false);
+
+const formatDate = (date) => {
+  if (!date) return '';
+  return new Date(date).toLocaleDateString();
+};
 
 const handleSubmit = () => {
   if (formValid.value) {
@@ -39,6 +46,39 @@ onMounted(() => {
         <v-card-title class="text-h6">Version Information</v-card-title>
         <v-card-text>
           <VersionNumber v-model:version="version" />
+        </v-card-text>
+      </v-card>
+
+      <!-- Date Section -->
+      <v-card class="mb-4" elevation="2">
+        <v-card-title class="text-h6">Release Date</v-card-title>
+        <v-card-text>
+          <v-menu
+            v-model="dateMenu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="290px"
+          >
+            <template #activator="{ props }">
+              <v-text-field
+                :model-value="formatDate(releaseDate)"
+                label="Select Release Date"
+                prepend-inner-icon="mdi-calendar"
+                readonly
+                v-bind="props"
+                variant="outlined"
+                placeholder="Click to select date"
+                hint="Click to open date picker"
+                persistent-hint
+              />
+            </template>
+            <v-date-picker
+              v-model="releaseDate"
+              @update:model-value="dateMenu = false"
+              show-adjacent-months
+            />
+          </v-menu>
         </v-card-text>
       </v-card>
 
