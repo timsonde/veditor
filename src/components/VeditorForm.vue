@@ -18,6 +18,26 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString();
 };
 
+const copyToClipboard = () => {
+  if (!formValid.value) return;
+
+  const versionObj = new VersionNotes(
+    version.value,
+    description.value,
+    changes.value,
+    author.value,
+    releaseDate.value
+  );
+
+  const htmlContent = versionObj.toHtml();
+
+  navigator.clipboard.writeText(htmlContent).then(() => {
+    alert('Release notes copied to clipboard!');
+  }).catch(err => {
+    console.error('Could not copy text: ', err);
+  });
+}
+
 const handleSubmit = () => {
   if (formValid.value) {
     const versionObj = new VersionNotes(
@@ -53,31 +73,14 @@ onMounted(() => {
       <v-card class="mb-4" elevation="2">
         <v-card-title class="text-h6">Release Date</v-card-title>
         <v-card-text>
-          <v-menu
-            v-model="dateMenu"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
+          <v-menu v-model="dateMenu" :close-on-content-click="false" transition="scale-transition" offset-y
+            min-width="290px">
             <template #activator="{ props }">
-              <v-text-field
-                :model-value="formatDate(releaseDate)"
-                label="Select Release Date"
-                prepend-inner-icon="mdi-calendar"
-                readonly
-                v-bind="props"
-                variant="outlined"
-                placeholder="Click to select date"
-                hint="Click to open date picker"
-                persistent-hint
-              />
+              <v-text-field :model-value="formatDate(releaseDate)" label="Select Release Date"
+                prepend-inner-icon="mdi-calendar" readonly v-bind="props" variant="outlined"
+                placeholder="Click to select date" hint="Click to open date picker" persistent-hint />
             </template>
-            <v-date-picker
-              v-model="releaseDate"
-              @update:model-value="dateMenu = false"
-              show-adjacent-months
-            />
+            <v-date-picker v-model="releaseDate" @update:model-value="dateMenu = false" show-adjacent-months />
           </v-menu>
         </v-card-text>
       </v-card>
@@ -116,10 +119,10 @@ onMounted(() => {
       <!-- Actions -->
       <v-row justify="end" class="mt-4">
         <v-col cols="auto">
-          <v-btn variant="outlined" class="mr-2" @click="$router?.go(-1)">
+          <!-- <v-btn variant="outlined" class="mr-2" @click="$router?.go(-1)">
             Cancel
-          </v-btn>
-          <v-btn type="submit" color="primary" :disabled="!formValid" size="large">
+          </v-btn> -->
+          <v-btn @click="copyToClipboard" type="submit" color="primary" :disabled="!formValid" size="large">
             <v-icon start>mdi-check</v-icon>
             Confirm Release
           </v-btn>
