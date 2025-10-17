@@ -1,18 +1,16 @@
 {
     "tags": [
-        "IX Services",
-        "IX Functions",
-        "IX DynKWL",
-        "IX LocalizedKWL",
-        "All Rhino",
-        "All",
-        "Webapp",
-        "Forms",
-        "ELOapps"
+        "Major Feature",
+        "Major Features",
+        "Features",
+        "Minor Features",
+        "Changes",
+        "Bugfixes",
+        "Translation",
+        "Debug",
+        "Info"
     ],
     "authors": [
-        "tn, synalis GmbH & Co. KG",
-        "ch, synalis GmbH & Co. KG",
-        "el, synalis GmbH & Co. KG"
+        "timsonde"
     ]
 }
