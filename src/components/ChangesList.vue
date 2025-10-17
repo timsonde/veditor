@@ -55,7 +55,6 @@ onMounted(async () => {
   <div>
     <!-- Header with Add Button -->
     <div class="d-flex justify-space-between align-center mb-4">
-      <h4 class="text-h6">Changes</h4>
       <v-btn
         @click="addChange"
         color="primary"
